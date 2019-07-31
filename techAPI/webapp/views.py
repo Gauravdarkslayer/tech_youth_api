@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+# from django.shortcuts import render
+# from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -37,7 +37,7 @@ class userList(APIView):
          # Get object with this pk
         article = get_object_or_404(user.objects.all(), pk=pk)
         article.delete()
-        return Response({"message": "Article with id `{}` has been deleted.".format(pk)},status=204)
+        return Response({"message": "User with id `{}` has been deleted.".format(pk)},status=204)
 
 
 class interestList(APIView):
@@ -46,12 +46,12 @@ class interestList(APIView):
         interest1=interest.objects.all()
         serializer=interestSerializer(interest1,many=True)
         return Response(serializer.data)
-    def post(self,request):
 
+    def post(self,request):
        serializer=interestSerializer(data=request.data)
        if serializer.is_valid(raise_exception=True):
            interest_saved=serializer.save()
-       return Response("Successfully Added Interest : ",interest_saved.title," for User")
+       return Response("Successfully Added Interest : ",interest_saved," for User")
 
     def put(self):
         pass
@@ -60,7 +60,7 @@ class interestList(APIView):
          # Get object with this pk
         article = get_object_or_404(user.objects.all(), pk=pk)
         article.delete()
-        return Response({"message": "Article with id `{}` has been deleted.".format(pk)},status=204)
+        return Response({"message": "Interest with id `{}` has been deleted.".format(pk)},status=204)
 
 class questionsList(APIView):
 
@@ -71,11 +71,11 @@ class questionsList(APIView):
 
     def post(self,request):
         # question=request.data.get('question')
-        serializer=questionSerializer(data=request.data)
+        serializer=questionsSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             question_save=serializer.save()
-        return Response("Successfully Added Interest : ",question_save.title," for User")
-    
+        return Response({"success":f"Successfully Added # QUESTION:  : {question_save} for User"})
+
     def put(self):
        pass
 
