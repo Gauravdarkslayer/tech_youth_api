@@ -23,9 +23,8 @@ class userList(APIView):
             # return Response({"Successfully Added User : ",f"{user_saved}")
             return Response({"success":f"User {user_saved}added successfully"})
 
-    def put(self,request,pk):
+    def put(self,request,pk):   #pk --> Primary key
         saved_article = get_object_or_404(user.objects.all(),pk=pk)
-        # data = request.data.get('article')
         dataa = userSerializer()
         dataa.update(instance=saved_article, validated_data=request.data)
         # serializer = userSerializer(instance=saved_article, data=request.data, partial=True)
@@ -57,22 +56,31 @@ class interestList(APIView):
     def put(self):
         pass
 
-    def delete(self):
-        pass
+    def delete(self,request,pk):
+         # Get object with this pk
+        article = get_object_or_404(user.objects.all(), pk=pk)
+        article.delete()
+        return Response({"message": "Article with id `{}` has been deleted.".format(pk)},status=204)
+
 class questionsList(APIView):
 
     def get(self,request):
         question=questions.objects.all()
         serializer=questionsSerializer(question,many=True)
         return Response(serializer.data)
+
     def post(self,request):
         # question=request.data.get('question')
         serializer=questionSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             question_save=serializer.save()
         return Response("Successfully Added Interest : ",question_save.title," for User")
+    
     def put(self):
        pass
 
-    def delete(self):
-        pass
+    def delete(self,request,pk):
+         # Get object with this pk
+        article = get_object_or_404(user.objects.all(), pk=pk)
+        article.delete()
+        return Response({"message": "Article with id `{}` has been deleted.".format(pk)},status=204)
