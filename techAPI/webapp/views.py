@@ -20,7 +20,8 @@ class userList(APIView):
         if serializer.is_valid(raise_exception=True):
             user_saved=serializer.save()
             print(user_saved)
-            return Response("Successfully Added User : ",f"{user_saved}")
+            # return Response({"Successfully Added User : ",f"{user_saved}")
+            return Response({"success":f"User {user_saved}added successfully"})
 
     def put(self,request,pk):
         saved_article = get_object_or_404(user.objects.all(),pk=pk)
@@ -35,7 +36,7 @@ class userList(APIView):
 
     def delete(self,request,pk):
          # Get object with this pk
-        article = get_object_or_404(Article.objects.all(), pk=pk)
+        article = get_object_or_404(user.objects.all(), pk=pk)
         article.delete()
         return Response({"message": "Article with id `{}` has been deleted.".format(pk)},status=204)
 
