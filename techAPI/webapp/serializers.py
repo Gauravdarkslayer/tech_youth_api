@@ -10,12 +10,9 @@ class userSerializer(serializers.ModelSerializer):
 
     def update(self, validated_data):
         instance = user.objects.get(emailid=validated_data.get('emailid'))
-        print(instance)
-        #instance.username =
-        #instance.emailid = validated_data.get('emailid', instance.emailid)
+        # print(instance)
         instance.username = validated_data.get('username')
         instance.password = validated_data.get('password')
-        # instance.author_id = validated_data.get('author_id')
 
         instance.save()
         return instance
@@ -29,10 +26,15 @@ class interestSerializer(serializers.ModelSerializer):
         model=interest
         fields='__all__'
 
-    def update(self, instance, validated_data):
-        instance.emailid = validated_data.get('emailid', instance.emailid)
-        instance.username = validated_data.get('username', instance.username)
-        instance.password = validated_data.get('password', instance.password)
+    def update(self, validated_data):
+        instance = user.objects.get(emailid=validated_data.get('emailid'))
+        # print(instance)
+        # instance.usernamec  = validated_data.get('username')
+        instance.interest = validated_data.get('interest')
+
+        instance.save()
+        return instance
+
 
 class questionsSerializer(serializers.ModelSerializer):
 
@@ -40,7 +42,11 @@ class questionsSerializer(serializers.ModelSerializer):
         model=questions
         fields='__all__'
 
-    def update(self, instance, validated_data):
-        instance.emailid = validated_data.get('emailid', instance.emailid)
-        instance.username = validated_data.get('username', instance.username)
-        instance.password = validated_data.get('password', instance.password)
+    def update(self, validated_data):
+        iid = user.objects.get(iid=validated_data.get('iid'))
+        # print(instance)
+        instance.question = validated_data.get('question')
+        # instance.password = validated_data.get('password')
+
+        instance.save()
+        return instance

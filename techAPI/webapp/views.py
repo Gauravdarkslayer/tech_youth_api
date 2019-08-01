@@ -23,11 +23,7 @@ class userList(APIView):
             # return Response({"Successfully Added User : ",f"{user_saved}")
             return Response({"success":f"User {user_saved}added successfully"})
 
-    def get_object(self,pk):
-        try:
-            return user.objects.get(pk=pk)
-        except user.DoesNotExist:
-            raise Http404
+   
 
     def put(self,request,format=None):   #pk --> Primary key
 
@@ -41,8 +37,8 @@ class userList(APIView):
 
     def delete(self,request,pk):
          # Get object with this pk
-        article = get_object_or_404(user.objects.all(), pk=pk)
-        article.delete()
+        to_delete_user= get_object_or_404(user.objects.all(), pk=pk)
+        to_delete_user.delete()
         return Response({"message": "User with id `{}` has been deleted.".format(pk)},status=204)
 
 
@@ -59,13 +55,19 @@ class interestList(APIView):
            interest_saved=serializer.save()
        return Response("Successfully Added Interest : ",interest_saved," for User")
 
-    def put(self):
-        pass
+    def put(self,request,format=None):   #pk --> Primary key
+
+        #user=self.get_object(pk)
+        #print(user)
+        serializer=userSerializer()
+        serializer.update(validated_data=request.data)
+        return Response("Success")
+        # return Response({"success": "Interest '{}' updated successfully".format(dataa)})
 
     def delete(self,request,pk):
          # Get object with this pk
-        article = get_object_or_404(user.objects.all(), pk=pk)
-        article.delete()
+        to_interest_delete = get_object_or_404(user.objects.all(), pk=pk)
+        to_interest_delete.delete()
         return Response({"message": "Interest with id `{}` has been deleted.".format(pk)},status=204)
 
 class questionsList(APIView):
@@ -87,6 +89,6 @@ class questionsList(APIView):
 
     def delete(self,request,pk):
          # Get object with this pk
-        article = get_object_or_404(user.objects.all(), pk=pk)
-        article.delete()
+        to_question_delete = get_object_or_404(user.objects.all(), pk=pk)
+        to_question_delete.delete()
         return Response({"message": "Article with id `{}` has been deleted.".format(pk)},status=204)
