@@ -1,5 +1,5 @@
 # from django.shortcuts import render
-# from django.http import HttpResponse
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -23,14 +23,20 @@ class userList(APIView):
             # return Response({"Successfully Added User : ",f"{user_saved}")
             return Response({"success":f"User {user_saved}added successfully"})
 
-    def put(self,request,pk):   #pk --> Primary key
-        saved_article = get_object_or_404(user.objects.all(),pk=pk)
-        dataa = userSerializer()
-        dataa.update(instance=saved_article, validated_data=request.data)
-        # serializer = userSerializer(instance=saved_article, data=request.data, partial=True)
-        if dataa.is_valid(raise_exception=True):
-            article_saved = dataa.save()
-        return Response({"success": "User '{}' updated successfully".format(article_saved)})
+    def get_object(self,pk):
+        try:
+            return user.objects.get(pk=pk)
+        except user.DoesNotExist:
+            raise Http404
+
+    def put(self,request,format=None):   #pk --> Primary key
+
+        #user=self.get_object(pk)
+        #print(user)
+        serializer=userSerializer()
+        serializer.update(validated_data=request.data)
+        return Response("Success")
+        # return Response({"success": "User '{}' updated successfully".format(dataa)})
 
 
     def delete(self,request,pk):
