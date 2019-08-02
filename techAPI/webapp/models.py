@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 class user(models.Model):
     username=models.CharField(max_length=40)
@@ -18,5 +17,6 @@ class interest(models.Model):
 class questions(models.Model):
     iid = models.ForeignKey(to=interest,on_delete=models.CASCADE)
     question=models.CharField(max_length=140)
+    # Time_and_date=models.CharField(max_length=20)
     def __str__(self):
         return f"{self.question}"

@@ -6,14 +6,20 @@ from rest_framework.response import Response
 from rest_framework import status
 from . models import *
 from . serializers import *
+import datetime
 # Create your views here.
 
 class userList(APIView):
 
     def get(self,request):
         username1=user.objects.all()
-        serializer=userSerializer(username1,many=True)
-        return Response(serializer.data)
+        inte = interest.objects.all()
+        question=questions.objects.all()
+        serializer=allSerializer(data=(username1,inte),many=True)
+        print(serializer.initial_data)
+        # if serializer.is_valid():#raise_exception=True):
+        return Response({"data":serializer.initial_data})
+        # return Response({"fail":"not validated_data"})
 
     def post(self,request):
         serializer=userSerializer(data=request.data)
@@ -23,12 +29,9 @@ class userList(APIView):
             # return Response({"Successfully Added User : ",f"{user_saved}")
             return Response({"success":f"User {user_saved}added successfully"})
 
-   
+
 
     def put(self,request,format=None):   #pk --> Primary key
-
-        #user=self.get_object(pk)
-        #print(user)
         serializer=userSerializer()
         serializer.update(validated_data=request.data)
         return Response("Success")
@@ -53,7 +56,7 @@ class interestList(APIView):
        serializer=interestSerializer(data=request.data)
        if serializer.is_valid(raise_exception=True):
            interest_saved=serializer.save()
-       return Response("Successfully Added Interest : ",interest_saved," for User")
+       return Response({"success":f"Successfully Added Interest : {interest_saved}, for User"})
 
     def put(self,request,format=None):   #pk --> Primary key
 
@@ -84,11 +87,15 @@ class questionsList(APIView):
             question_save=serializer.save()
         return Response({"success":f"Successfully Added # QUESTION:  : {question_save} for User"})
 
-    def put(self):
-       pass
+    def put(self,request,format=None):   #pk --> Primary key
+        serializer=userSerializer()
+        serializer.update(validated_data=request.data)
+        return Response("Success")
+        # return Response({"success": "Interest '{}' updated successfully".format(dataa)})
+
 
     def delete(self,request,pk):
          # Get object with this pk
         to_question_delete = get_object_or_404(user.objects.all(), pk=pk)
         to_question_delete.delete()
-        return Response({"message": "Article with id `{}` has been deleted.".format(pk)},status=204)
+        return Response({"message": "# QUESTION:  with id `{}` has been deleted.".format(pk)},status=204)
