@@ -25,7 +25,7 @@ SECRET_KEY = 'i1ao0c=)kqkfq%ot^fehci2rx2-!&ldj3f^bzq9f8x691+2mv='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gauravbhojwani.pythonanywhere.com']
 
 
 # Application definition
@@ -80,6 +80,13 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+    # 'default':{
+    #     'ENGINE':'djongo',
+    #     'NAME':'connect_login_signup',
+    #     'HOST':'mongodb://<Gaurav>:<gaurav123>@ds253567.mlab.com:53567/connect_login_signup',
+    #     'USER':'Gaurav',
+    #     'Password':'gaurav123',
+    # }
 }
 
 

@@ -6,27 +6,32 @@ from rest_framework.response import Response
 from rest_framework import status
 from . models import *
 from . serializers import *
-import datetime
+# import datetime
+
 # Create your views here.
 
 class userList(APIView):
 
     def get(self,request):
         username1=user.objects.all()
-        inte = interest.objects.all()
-        question=questions.objects.all()
-        serializer=allSerializer(data=(username1,inte),many=True)
-        print(serializer.initial_data)
-        # if serializer.is_valid():#raise_exception=True):
-        return Response({"data":serializer.initial_data})
+        # inte = interest.objects.all()
+        # # question=questions.objects.all()
+        serializer=userSerializer(username1,many=True)
+
+        # for i in range(len(dataa1)):
+        #     for j in range(len(dataa)):
+        #         if dataa[0]['emailid']==dataa1[0]['emailid']:
+        #         dict1={'id':dataa1[0]['id'],'interest':dataa1[0]['interest']}
+        #         dataa.extend([(dict1)])
+        #         print(dataa)
+        #         return Response(dataa)
         # return Response({"fail":"not validated_data"})
+        return Response(serializer.data)
 
     def post(self,request):
         serializer=userSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user_saved=serializer.save()
-            print(user_saved)
-            # return Response({"Successfully Added User : ",f"{user_saved}")
             return Response({"success":f"User {user_saved}added successfully"})
 
 

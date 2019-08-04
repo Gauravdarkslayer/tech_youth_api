@@ -34,22 +34,18 @@ class questionsSerializer(serializers.ModelSerializer):
         fields='__all__'
 
     def update(self, validated_data):
-        iid = user.objects.get(iid=validated_data.get('iid'))
-        # print(instance)
+        iid = user.objects.get(iid=validated_data.get('iid')) #interest id
         instance.question = validated_data.get('question')
-        # instance.password = validated_data.get('password')
-
         instance.save()
         return instance
 
 
 class userSerializer(serializers.ModelSerializer):
-    # inte = interestSerializer(many=True,read_only=True)
+    # interest = interestSerializer(many=True)
+
     class Meta:
         model=user
-
-
-        fields='__all__'
+        fields='__all__'#['username','password','emailid']#,'interest']
 
 
 
@@ -62,13 +58,13 @@ class userSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
-class allSerializer(serializers.ModelSerializer):
-    # us = userSerializer(many=True)
-    # inter = interestSerializer(many=True)
-    # ques = questionsSerializer(many=True)
-
-    class Meta:
-        model=user,interest
-        fields =[{user:['username','password','emailid'],
-                    interest:['__all__']}]
+#
+# class allSerializer(serializers.ModelSerializer):
+#     # us = userSerializer(many=True)
+#     # inter = interestSerializer(many=True)
+#     # ques = questionsSerializer(many=True)
+#
+#     class Meta:
+#         model=user,interest
+#         fields =[{user:['username','password','emailid'],
+#                     interest:['__all__']}]
