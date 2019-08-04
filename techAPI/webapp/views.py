@@ -32,8 +32,14 @@ class userList(APIView):
         serializer=userSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user_saved=serializer.save()
+# <<<<<<< HEAD
             # return Response({"success":f"User {user_saved}added successfully"})
             return Response(serializer.data)
+# =======
+#             return Response({"success":f"User {user_saved}added successfully"})
+#             return Response({serializer.data})
+
+# >>>>>>> b8e3a5f3ee6a265dbb30966d7e5a81dda47c1e16
 
 
     def put(self,request,format=None):   #pk --> Primary key

@@ -25,8 +25,12 @@ SECRET_KEY = 'i1ao0c=)kqkfq%ot^fehci2rx2-!&ldj3f^bzq9f8x691+2mv='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# <<<<<<< HEAD
 # ALLOWED_HOSTS = ['gauravbhojwani.pythonanywhere.com']
 ALLOWED_HOSTS = []
+# =======
+# ALLOWED_HOSTS = []#['gauravbhojwani.pythonanywhere.com']
+# >>>>>>> b8e3a5f3ee6a265dbb30966d7e5a81dda47c1e16
 
 
 # Application definition
