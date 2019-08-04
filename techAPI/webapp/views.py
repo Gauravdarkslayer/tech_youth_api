@@ -33,6 +33,7 @@ class userList(APIView):
         if serializer.is_valid(raise_exception=True):
             user_saved=serializer.save()
             return Response({"success":f"User {user_saved}added successfully"})
+            return Response({serializer.data})
 
 
 
