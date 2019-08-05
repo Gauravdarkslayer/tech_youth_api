@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from . models import *
 from . serializers import *
-# import datetime
 
 # Create your views here.
 
@@ -28,6 +27,12 @@ class userList(APIView):
         # return Response({"fail":"not validated_data"})
         return Response(serializer.data)
 
+    def get(self,request,var):
+        username1=user.objects.get(emailid=var)
+        current_user=userSerializer(username1,many=True)
+        return Response(current_user.data)
+
+
     def post(self,request):
         serializer=userSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -35,6 +40,7 @@ class userList(APIView):
 # <<<<<<< HEAD
             # return Response({"success":f"User {user_saved}added successfully"})
             return Response(serializer.data)
+        return Response("Failed To Post Data")
 # =======
 #             return Response({"success":f"User {user_saved}added successfully"})
 #             return Response({serializer.data})
@@ -110,3 +116,7 @@ class questionsList(APIView):
         to_question_delete = get_object_or_404(user.objects.all(), pk=pk)
         to_question_delete.delete()
         return Response({"message": "# QUESTION:  with id `{}` has been deleted.".format(pk)},status=204)
+
+
+@api_view('GET')
+def user(var):
